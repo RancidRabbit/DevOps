@@ -13,3 +13,4 @@ def buildAndDeployImage(){
         sh 'docker push 209.38.249.127:8083/simple-java:1.1'
     }
 }
+return this
