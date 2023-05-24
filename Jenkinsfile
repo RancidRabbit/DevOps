@@ -12,14 +12,6 @@ pipeline {
                 }
             }
         }
-        stage("testing") {
-            steps {
-                script {
-                    echo "testing App"
-                    gv.testApp()
-                }
-            }
-        }
         stage("build") {
             steps {
                 script {

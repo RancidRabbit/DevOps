@@ -1,7 +1,3 @@
-def testApp() {
-    sh 'mvn test'
-}
-
 def buildApp(){
     sh 'mvn package'
 }
