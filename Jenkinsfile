@@ -12,7 +12,20 @@ pipeline {
                 }
             }
         }
+        stage("test"){
+            steps {
+                script {
+                   echo "testing app"
+                   gv.testApp() 
+                }
+            }
+        }
         stage("build") {
+            when {
+               expression {
+                  BRANCH_NAME == "main"
+               }
+            }
             steps {
                 script {
                     echo "building app"
@@ -21,6 +34,11 @@ pipeline {
             }
         }
         stage("build image") {
+            when {
+               expression {
+                  BRANCH_NAME == "main"
+               }
+            }
             steps {
                 script {
                     echo "building image"
