@@ -1,51 +1,46 @@
 #!/usr/bin/env groovy
 
-@Library('shared-lib')
-def gv
+@Library('shared-lib')_
+
 pipeline {
     agent any
     tools {
         maven 'maven'
     }
     stages {
-        stage("init"){
+        stage("test") {
             steps {
                 script {
-                    gv = load "loader.groovy"
-                }
-            }
-        }
-        stage("test"){
-            steps {
-                script {
-                   echo "testing app"
-                   gv.testApp() 
+                    echo "testing app"
+                    mavenTestApp()
                 }
             }
         }
         stage("build") {
-//            when {
-//               expression {
-//                  BRANCH_NAME == "main"
-//               }
-//            }
+            when {
+               expression {
+                  BRANCH_NAME == "main"
+               }
+            }
             steps {
                 script {
                     echo "building app"
-                    buildApp()
+                    mavenBuildApp()
                 }
             }
         }
-        stage("build image") {
-//            when {
-//               expression {
-//                  BRANCH_NAME == "main"
-//               }
-//            }
+        stage("build and push image") {
+            when {
+               expression {
+                  BRANCH_NAME == "main"
+               }
+            }
             steps {
                 script {
                     echo "building image"
-                    buildAndDeployImage()
+                    dockerBuildImage '209.38.249.127:8083/simple-java:1.2'
+                    dockerLogin()
+                    dockerPushImage '209.38.249.127:8083/simple-java:1.2'
                 }
             }
         }
