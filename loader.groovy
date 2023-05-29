@@ -1,3 +1,5 @@
+// Этот вариант оставлю для наглядности, best practice в ветке main с Jenkins Shared Library и разбивкой методов по их
+// функциональности
 def testApp(){
     sh 'mvn test'
 }
