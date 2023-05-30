@@ -16,6 +16,24 @@ pipeline {
                 }
             }
         }
+        stage("increment version") {
+          when {
+             expression {
+                 BRANCH_NAME == "main"
+             }
+          }
+           steps {
+               script {
+                  echo "incrementing version"
+                  sh 'mvn build-helper:parse-version version:set \
+             -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion \
+             versions:commit'
+             def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+             def version = matcher[0][1]
+             env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+               }
+           }
+        }
         stage("build") {
             when {
                expression {
@@ -38,9 +56,9 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    dockerBuildImage '209.38.249.127:8083/simple-java:1.2'
+                    dockerBuildImage "209.38.249.127:8083/$IMAGE_NAME"
                     dockerLogin()
-                    dockerPushImage '209.38.249.127:8083/simple-java:1.2'
+                    dockerPushImage "209.38.249.127:8083/$IMAGE_NAME"
                 }
             }
         }
