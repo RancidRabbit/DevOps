@@ -51,9 +51,9 @@ pipeline {
             steps {
                 script {
                     echo "IMAGE_NAME = ${env.IMAGE_NAME}"
-                    dockerBuildImage "209.38.249.127:8083/Jtest/${env.IMAGE_NAME}"
+                    dockerBuildImage "209.38.249.127:8083/jtest_${env.IMAGE_NAME}"
                     dockerLogin()
-                    dockerPushImage "209.38.249.127:8083/Jtest/${env.IMAGE_NAME}"
+                    dockerPushImage "209.38.249.127:8083/jtest_${env.IMAGE_NAME}"
                 }
             }
         }
