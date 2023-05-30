@@ -45,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building app"
+                    echo "building app ${IMAGE_NAME}"
                     mavenBuildApp()
                 }
             }
