@@ -4,9 +4,6 @@
 
 pipeline {
     agent any
-    environment {
-        IMAGE_NAME = ''
-    }
     tools {
         maven 'maven'
     }
@@ -33,7 +30,7 @@ pipeline {
              versions:commit'
              def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
              def version = matcher[0][1]
-             $IMAGE_NAME = "$version-$BUILD_NUMBER"
+             env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                }
            }
         }
@@ -45,12 +42,15 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building app ${IMAGE_NAME}"
+                    echo "building app"
                     mavenBuildApp()
                 }
             }
         }
         stage("build and push image") {
+            environment {
+
+            }
             when {
                expression {
                   BRANCH_NAME == "main"
@@ -58,10 +58,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building image ${IMAGE_NAME}"
-                    dockerBuildImage "209.38.249.127:8083/${IMAGE_NAME}"
-                    dockerLogin()
-                    dockerPushImage "209.38.249.127:8083/${IMAGE_NAME}"
+                    sh "echo $IMAGE_NAME"
                 }
             }
         }
