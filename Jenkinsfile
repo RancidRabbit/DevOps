@@ -48,9 +48,6 @@ pipeline {
             }
         }
         stage("build and push image") {
-            environment {
-
-            }
             when {
                expression {
                   BRANCH_NAME == "main"
