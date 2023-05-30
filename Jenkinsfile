@@ -51,6 +51,9 @@ pipeline {
             steps {
                 script {
                     echo "IMAGE_NAME = ${env.IMAGE_NAME}"
+                    dockerBuildImage "209.38.249.127:8083/${env.IMAGE_NAME}"
+                    dockerLogin()
+                    dockerPushImage "209.38.249.127:8083/${env.IMAGE_NAME}"
                 }
             }
         }
