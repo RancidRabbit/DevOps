@@ -49,8 +49,8 @@ pipeline {
         }
         stage("build and push image") {
             steps {
-                withEnv(["IMAGE_NAME"]){
-                   echo "IMAGE_NAME = ${env.IMAGE_NAME}"
+                script {
+                    echo "IMAGE_NAME = ${env.IMAGE_NAME}"
                 }
             }
         }
