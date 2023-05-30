@@ -30,7 +30,7 @@ pipeline {
              versions:commit'
              def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
              def version = matcher[0][1]
-             env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+             env.IMAGE_NAME = "$version-${env.BUILD_NUMBER}"
                }
            }
         }
@@ -48,14 +48,9 @@ pipeline {
             }
         }
         stage("build and push image") {
-            when {
-               expression {
-                  BRANCH_NAME == "main"
-               }
-            }
             steps {
-                script {
-                    sh "echo $IMAGE_NAME"
+                withEnv(["IMAGE_NAME"]){
+                   echo "IMAGE_NAME = ${env.IMAGE_NAME}"
                 }
             }
         }
