@@ -4,6 +4,9 @@
 
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME
+    }
     tools {
         maven 'maven'
     }
@@ -30,7 +33,7 @@ pipeline {
              versions:commit'
              def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
              def version = matcher[0][1]
-             env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+             $IMAGE_NAME = "$version-$BUILD_NUMBER"
                }
            }
         }
