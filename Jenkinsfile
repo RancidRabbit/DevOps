@@ -58,7 +58,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "building image"
+                    echo "building image ${IMAGE_NAME}"
                     dockerBuildImage "209.38.249.127:8083/${IMAGE_NAME}"
                     dockerLogin()
                     dockerPushImage "209.38.249.127:8083/${IMAGE_NAME}"
