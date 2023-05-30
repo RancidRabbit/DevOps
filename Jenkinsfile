@@ -24,7 +24,7 @@ pipeline {
           }
            steps {
                script {
-                  echo "incrementing version"
+                  echo "incrementing fucking version"
                   sh 'mvn build-helper:parse-version version:set \
              -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion \
              versions:commit'
