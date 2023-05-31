@@ -61,7 +61,15 @@ pipeline {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_user_for_github', keyFileVariable: 'PRIVATE')]) {
-                       sh 'git config --list'
+                        sh 'echo "fixed"'
+//                        sh 'git config --global user.email "jenkins@gmail.com"'
+//                        sh 'git config --global user.name "jenkins"'
+
+                        sh 'git remote set-url origin git@github.com:RancidRabbit/DevOps.git'
+                        sh 'git add pom.xml'
+                        sh 'git commit -m "updating version in pom.xml"'
+
+                        sh 'git push'
                     }
                 }
             }
