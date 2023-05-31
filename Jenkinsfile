@@ -69,7 +69,7 @@ pipeline {
                         sh 'git add pom.xml'
                         sh 'git commit -m "updating version in pom.xml"'
 
-                        sh 'git push'
+                        sh 'git push origin HEAD:main'
                     }
                 }
             }
