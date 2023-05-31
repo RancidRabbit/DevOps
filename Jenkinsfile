@@ -68,7 +68,7 @@ pipeline {
                         sh 'git remote set-url origin git@github.com:RancidRabbit/DevOps.git'
                         sh 'git add pom.xml'
                         sh 'git commit -m "updating version in pom.xml"'
-                        sh 'git push git@github.com:RancidRabbit/DevOps.git'
+                        sh 'git push git@github.com:RancidRabbit/DevOps.git HEAD:main'
                     }
                 }
             }
