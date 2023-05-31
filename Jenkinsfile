@@ -57,5 +57,21 @@ pipeline {
                 }
             }
         }
+        stage("push updated pom.xml") {
+            steps {
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: "176945ce-4498-47bf-89e5-20fe132e4720")]) {
+                        //auth to git here
+                        sh 'git config --global user.email "jenkins@gmail.com"'
+                        sh 'git config --global user.name "jenkins"'
+
+                        sh 'git remote set-url origin git@github.com:RancidRabbit/DevOps.git'
+                        sh 'git add pom.xml'
+                        sh 'git commit -m "updating version in pom.xml"'
+                        sh 'git push origin HEAD:main'
+                    }
+                }
+            }
+        }
     }
 }
