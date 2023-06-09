@@ -60,7 +60,7 @@ pipeline {
         stage("push updated pom.xml") {
             steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_user_for_github', keyFileVariable: 'PRIVATE')]) {
+                        sshagent(['jenkins_user_for_github']){
                         sh 'ssh -o StrictHostKeyChecking=no -T git@github.com'
                         sh 'git config --global user.email "jenkins@gmail.com"'
                         sh 'git config --global user.name "jenkins"'
@@ -75,4 +75,6 @@ pipeline {
             }
         }
     }
+
+
 }
