@@ -60,12 +60,12 @@ pipeline {
         stage("push updated pom.xml") {
             steps {
                 script {
-                        sshagent(['jenkins_user_for_github']){
-                        sh 'ssh -o StrictHostKeyChecking=no -T git@github.com'
+                        withCredentials([usernamePassword(credentialsId: 'gh_token_for_jenkins', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+
                         sh 'git config --global user.email "jenkins@gmail.com"'
                         sh 'git config --global user.name "jenkins"'
 
-                        sh 'git remote set-url origin git@github.com:RancidRabbit/DevOps.git'
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/RancidRabbit/DevOps.git"
                         sh 'git add pom.xml'
                         sh 'git commit -m "updating version in pom.xml"'
 
